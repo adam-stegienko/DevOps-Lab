@@ -1,6 +1,43 @@
 version: "3.7"
 
 services:
-    gitlab_repo:
+    gitlab:
         container_name: gitlab_repo
         image: gitlab/gitlab-ce:latest
+        hostname: localhost
+        environment:
+            GITLAB_OMNIBUS_CONFIG: |
+                external_url http://localhost
+        ports:
+            - "22:22"
+            - "80:80"
+        networks:
+            - gitlab_net
+        restart: always
+        volumes:
+            - $/srv/gitlab/config:/etc/gitlab
+            - $/srv/gitlab/logs:/var/log/gitlab
+            - $/srv/gitlab/data:/var/opt/gitlab
+        shm_size: 256m
+    
+    jenkins-master:
+        container_name: jenkins_master
+        build:
+            context: .
+        ports:
+            - "8080:8080"
+            - "8081:8081"
+        volumes:
+            - jenkins_home:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - gitlab_net
+        restart: on-failure
+
+volumes:
+    jenkins_home:
+        driver: local
+
+networks:
+    gitlab_net:
+        driver: bridge
