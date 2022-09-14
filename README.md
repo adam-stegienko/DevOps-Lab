@@ -15,5 +15,3 @@
 6. Write a build pipeline to build cowsay. (step 1 is to build; step 2 is to test: docker run cowsay and use curl to see if the site is available)
 
 NOTE: apply docker socket solution for docker in docker --> connect docker socket inside a container to the host docker socket
-
-
