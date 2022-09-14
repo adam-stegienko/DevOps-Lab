@@ -6,9 +6,9 @@
 
 2. AWS step !!! -- PASSED, instance run and I got access to it
 
-3. Jenkins with docker installed (get the info how to do it) --> use dockerfile to create an image for jenkins (add docker and add jenkins to docker group)
+3. Jenkins with docker installed (get the info how to do it) --> use dockerfile to create an image for jenkins (add docker and add jenkins to docker group) -- PASSED
 
-4. Docker-Compose for both dockerable Jenkins-Master and GitLab (community edition) --> expose http 80 port for GitLab, expose 22 for GitLab SSH port, expose http 8080 port for Jenkins
+4. Docker-Compose for both dockerable Jenkins-Master and GitLab (community edition) --> expose http 80 port for GitLab, expose 22 for GitLab SSH port, expose http 8080 port for Jenkins -- PASSED
 
 5. Create a cowsay repo in GitLab. Push the cowsay sources into there.
 
