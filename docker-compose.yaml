@@ -1,26 +1,27 @@
 version: "3.7"
 
 services:
-    gitlab:
+    gitlab_repo:
         container_name: gitlab_repo
         image: gitlab/gitlab-ce:latest
         hostname: localhost
         environment:
             GITLAB_OMNIBUS_CONFIG: |
-                external_url http://localhost
+                external_url 'http://localhost'
+                gitlab_rails['gitlab_shell_ssh_port'] = 2224
         ports:
-            - "22:22"
             - "80:80"
+            - "2224:22"
         networks:
             - gitlab_net
         restart: always
         volumes:
-            - $/srv/gitlab/config:/etc/gitlab
-            - $/srv/gitlab/logs:/var/log/gitlab
-            - $/srv/gitlab/data:/var/opt/gitlab
+            - /srv/gitlab/config:/etc/gitlab
+            - /srv/gitlab/logs:/var/log/gitlab
+            - /srv/gitlab/data:/var/opt/gitlab
         shm_size: 256m
     
-    jenkins-master:
+    jenkins_master:
         container_name: jenkins_master
         build:
             context: .

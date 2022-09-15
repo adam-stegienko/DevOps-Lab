@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker-compose up --remove-orphans --detach
+docker-compose down
+docker-compose up --detach --build
