@@ -28,11 +28,11 @@ Write down sub-tasks for today's thumbnailer --> upload image.io artifact to JFr
 
 ---------------------------------------------------
 
-6. Create a docker-compose.yaml file with full build network, including GitLab, Jenkins, and JFrog artifactory containers
-7. Set up GitLab server --> register user, add ssh (or save credentials), create two repositories, push io-ext sources to io-ext repo, push thumbnailer app sources to thumbnailer repo
+6. Create a docker-compose.yaml file with full build network, including GitLab, Jenkins, and JFrog artifactory containers -- PASSED
+7. Set up GitLab server --> register user, add ssh (or save credentials), create two repositories, push io-ext sources to io-ext repo, push thumbnailer app sources to thumbnailer repo -- PASSED
 8. Set up Jenkins server --> Install Jenkins, add maven integration and config file provider plugins (to upload settings.xml to integrate with JFrog artifactory), make sure to configure JDK Java_Home fo Open JDK 8 (locate it first on maven container), add maven 3.6.2 tool, set up connection to GitLab
-9. Set up JFrog artifactory server --> install artifactory with a maven (dev) repository
-10. Create a jenkins job --> pull image-io-extensions from gitlab and use "mvn install" on it (CHECKPOINT! --> if not working, debug)
+9. Set up JFrog artifactory server --> install artifactory with a maven (dev) repository -- PASSED
+10. Create a jenkins job --> pull image-io-extensions from gitlab and use "mvn install" on it (CHECKPOINT! --> if not working, debug) -- PASSED
 
 ----------------------------------------------------
 
