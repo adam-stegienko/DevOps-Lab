@@ -6,10 +6,10 @@ services:
         image: gitlab/gitlab-ce:latest
         hostname: localhost
         ports:
-            - "80:80"
-            - "443:443"
+            - 80:80
+            - 443:443
         networks:
-            - gitlab_net
+            - lab_net
         restart: always
         volumes:
             - /srv/gitlab/config:/etc/gitlab
@@ -22,14 +22,40 @@ services:
         build:
             context: .
         ports:
-            - "8080:8080"
+            - 8080:8080
         volumes:
             - /jenkins_home:/var/jenkins_home
             - /var/run/docker.sock:/var/run/docker.sock
         networks:
-            - gitlab_net
+            - lab_net
         restart: on-failure
 
+    jfrog_artifactory:
+        container_name: jfrog_artifactory
+        image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+        environment:
+            - JF_ROUTER_ENTRYPOINTS_EXTERNALPORT=8082
+            - JFROG_HOME=/home/ubuntu/jfrog
+        ports:
+            - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT} # for router communication
+            - 8081:8081 # for artifactory communication
+        volumes:
+            - ${JFROG_HOME}/artifactory/var:/var/opt/jfrog/artifactory
+            - /etc/localtime:/etc/localtime:ro
+        networks:
+            - lab_net
+        restart: always
+        logging:
+            driver: json-file
+        options:
+            max-size: "50m"
+            max-file: "10"
+        ulimits:
+            nproc: 65535
+            nofile:
+                soft: 32000
+                hard: 40000
+
 networks:
-    gitlab_net:
+    lab_net:
         driver: bridge
