@@ -36,15 +36,15 @@ Write down sub-tasks for today's thumbnailer --> upload image.io artifact to JFr
 
 ----------------------------------------------------
 
-11. Generate "settings.xml" file allowing to upload to "libs-release-local" and "libs-snapshot-local" repositories (all done using JFrog UI)
-12. Store "settings.xml" as settings file for the user called "maven" (using config file provider plugin in system settings)
-13. Update your existing job from "mvn install" command to "mvn deploy" and make it accept the new maven settings file
-14. Deploy artifact into "libs-snapshot" repository in JFrog (CHECKPOINT! --> if not working, debug)
+11. Generate "settings.xml" file allowing to upload to "libs-release-local" and "libs-snapshot-local" repositories (all done using JFrog UI) -- PASSED
+12. Store "settings.xml" as settings file for the user called "maven" (using config file provider plugin in system settings) -- PASSED
+13. Update your existing job from "mvn install" command to "mvn deploy" and make it accept the new maven settings file -- PASSED
+14. Deploy artifact into "libs-snapshot" repository in JFrog (CHECKPOINT! --> if not working, debug) -- PASSED
 
 -------------------------------------------------------
 
-15. Implement a new CI job (image-io-extensions CI) that is triggered by push to master branch --> performing "mvn deploy"
-16. Implement a new CI job (thumbnailer CI) that is triggered by push to master branch --> performing "mvn install"
+15. Implement a new CI job (image-io-extensions CI) that is triggered by push to master branch --> performing "mvn deploy" -- CI Pipeline-Jenkinsfile!! -- TODO
+16. Implement a new CI job (thumbnailer CI) that is triggered by push to master branch --> performing "mvn install" -- CI Pipeline-Jenkinsfile!! -- TODO
 17. Push any changed to master and see if this triggers a successful build and a successful deploy (CHECKPOINT! --> if not working, debug)
 
 -------------------------------------------------------
