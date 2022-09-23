@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         REPO_CREDENTIALS = credentials('a31843c7-9aa6-4723-95ff-87a1feb934a1')
+        TAG = "1.1.${BUILD_NUMBER}"
     }
     tools {
         maven 'Maven 3.6.2'
@@ -48,12 +49,39 @@ pipeline {
                 } 
             }
         }
-        stage('Package and E2E Tests') {
+        stage('Package') {
             steps {
                 script {
-                    sh '''
-                    mvn prepare-package
-                    mvn package
+                    configFileProvider([configFile(fileId: 'fc3e184d-fd76-4262-a1e7-9a5671ebd340', variable: 'MAVEN_SETTINGS_XML')]) {
+                        sh '''
+                        mvn prepare-package
+                        mvn clean package
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Building Docker Image and Pushing to ECR') {
+            steps {
+                script {
+                    // docker.withRegistry('644435390668.dkr.ecr.eu-central-1.amazonaws.com/', 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-central-1.amazonaws.com') {
+                    //     docker.image("adam-thumbnailer:${TAG}").push()
+                    //     docker.image("adam-thumbnailer:${TAG}").push("latest")
+                    sh'''
+                    aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-central-1.amazonaws.com
+                    docker build -t adam-thumbnailer:${TAG} .
+                    docker tag adam-thumbnailer:${TAG} 644435390668.dkr.ecr.eu-central-1.amazonaws.com/adam-thumbnailer:${TAG}
+                    docker push 644435390668.dkr.ecr.eu-central-1.amazonaws.com/adam-thumbnailer:${TAG}
+                    docker tag adam-thumbnailer:${TAG} 644435390668.dkr.ecr.eu-central-1.amazonaws.com/adam-thumbnailer:latest
+                    docker push 644435390668.dkr.ecr.eu-central-1.amazonaws.com/adam-thumbnailer:latest
+                    '''
+                }
+            }
+        }
+        stage('E2E Tests') {
+            steps {
+                script {        
+                    sh'''
                     mvn pre-integration-test
                     mvn integration-test
                     mvn post-integration-test
