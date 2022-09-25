@@ -1,22 +1,5 @@
 # Adam Lab
 
-BACKLOG:
-- EC2 prod container --> deploy cowsay there with "ssh -i .... sh 'docker pull, run....'" command
-- Cowsay version --> provide token into project config and jenkinsfile to allow jenkins to overwrite repo files
-
-------------------------------------------------
-
-Interesting thing for tokens and cowsay versioned: -----------------
-
-UPDATING DATA IN REPO --> token needs to be put in secret text section in jenkins->project // also, secret token part needs to be included in Jenkinsfile
-
-withCredentials([file(credentialsId: 'secret', variable: 'TOKEN')]) {
-    sh 'git push http://ec2-3-71-107-48.eu-central-1.compute.amazonaws.com/adam-stegienko/cowsay-ci.git'
-}
-sh 'echo Release branch has been created.'
-
--------------------------------------------------
-
 TO DO TODAY (21.09.2022):
 Write down sub-tasks for today's thumbnailer --> upload image.io artifact to JFrog and tell thumbnailer to retrieve this dependency from the artifactory to use it
 
