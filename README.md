@@ -1,4 +1,4 @@
-# Adam Lab
+# DevOps Lab
 
 #### Project Overview
 
